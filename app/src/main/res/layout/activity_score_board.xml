@@ -69,6 +69,14 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="50dp">
 
+                <Button
+                    android:id="@+id/player2Plus"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/plus_button_press"
+                     />
 
                 <Button
                     android:id="@+id/player2Minus"
@@ -76,16 +84,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/minus_button_press"
-                    android:rotation="180" />
+                     />
 
-                <Button
-                    android:id="@+id/player2Plus"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/plus_button_press"
-                    android:rotation="180" />
+
 
 
             </LinearLayout>
@@ -144,23 +145,23 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="50dp">
 
-
+                <Button
+                    android:id="@+id/player1Plus"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/plus_button_press"
+                     />
                 <Button
                     android:id="@+id/player1Minus"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/minus_button_press"
-                    android:rotation="180" />
+                     />
 
-                <Button
-                    android:id="@+id/player1Plus"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/plus_button_press"
-                    android:rotation="180" />
+
 
 
             </LinearLayout>

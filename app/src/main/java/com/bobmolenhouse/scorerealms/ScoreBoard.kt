@@ -37,8 +37,15 @@ class ScoreBoard : AppCompatActivity() {
 
     private var mAdView: AdView? = null
 
+    //build click listener.
     private val clickListener = View.OnClickListener { v ->
+
+        //cancel the timer every time a button is clicked, because, when making clicks
+        //in rapid succession, we will start the timer again after each click so
+        //we always have 1.5 seconds of change score displayed after last click.
         timer!!.cancel()
+
+        //figure out which button was clicked, and update accordingly.
         when (v.id) {
             R.id.player1Plus -> {
                 player1Score += 1
@@ -60,11 +67,11 @@ class ScoreBoard : AppCompatActivity() {
                 }
 
                 if (scoreChange1 >= 0) {
-                    player1ScoreChange!!.text = "+ " + scoreChange1
+                    player1ScoreChange?.text = "+ " + scoreChange1
                 } else if (player1Score == 0) {
-                    player1ScoreChange!!.text = "You Dead"
+                    player1ScoreChange?.text = "You Dead"
                 } else {
-                    player1ScoreChange!!.text = "" + scoreChange1
+                    player1ScoreChange?.text = "" + scoreChange1
                 }
                 timer!!.start()
                 player1ScoreView!!.text = "" + player1Score
@@ -97,12 +104,20 @@ class ScoreBoard : AppCompatActivity() {
                 } else {
                     player2ScoreChange!!.text = "" + scoreChange2
                 }
+
+                //now we start timer
                 timer!!.start()
                 player2ScoreView!!.text = "" + player2Score
             }
         }
+
+        //update background colors.
+        updateScoreBackground(player1Score, player2Score)
     }
 
+    /**
+     * on Create builds the scoreboard view.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_score_board)
@@ -114,15 +129,19 @@ class ScoreBoard : AppCompatActivity() {
         val adRequest = AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build()
-        mAdView!!.loadAd(adRequest)
+        mAdView?.loadAd(adRequest)
 
         //initialize values and what not
         player1ScoreView = findViewById(R.id.player1Score) as TextView
         player2ScoreView = findViewById(R.id.player2Score) as TextView
         player1ScoreChange = findViewById(R.id.player1_score_change) as TextView
         player2ScoreChange = findViewById(R.id.player2_score_change) as TextView
+
+        //starting score set to 50. TODO make a menu option to set custom value
         player1Score = 50
         player2Score = 50
+
+        //set button listeners
         player1Plus = findViewById(R.id.player1Plus) as Button
         player1Plus!!.setOnClickListener(clickListener)
         player1Minus = findViewById(R.id.player1Minus) as Button
@@ -132,6 +151,7 @@ class ScoreBoard : AppCompatActivity() {
         player2Minus = findViewById(R.id.player2Minus) as Button
         player2Minus!!.setOnClickListener(clickListener)
 
+        //countdown timer used to manage display of score change text view
         timer = object : CountDownTimer(1500, 100) {
             override fun onTick(l: Long) {
 
@@ -160,6 +180,8 @@ class ScoreBoard : AppCompatActivity() {
                 player2Score = 50
                 player1ScoreView!!.text = "" + player1Score
                 player2ScoreView!!.text = "" + player2Score
+
+                updateScoreBackground(player1Score, player2Score)
                 return true
             }
 
@@ -174,12 +196,14 @@ class ScoreBoard : AppCompatActivity() {
                 return true
             }
 
+            //when master control is selected, flip player1 180 deg, virtically
             R.id.master_control -> {
                 val l = findViewById(R.id.player1) as LinearLayout
                 l.rotation = 0f
                 return true
             }
 
+            //when individual control, flip player1 to be upside down.
             R.id.individual_control -> {
                 val i = findViewById(R.id.player1) as LinearLayout
                 i.rotation = 180f
@@ -187,6 +211,47 @@ class ScoreBoard : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun updateScoreBackground(p1 : Int, p2 : Int){
+
+        if(p1 > 25) {
+            player1ScoreView!!.setBackgroundResource(R.drawable.g)
+            player1ScoreChange!!.setBackgroundResource(R.drawable.gt)
+            player1Plus!!.setBackgroundResource(R.drawable.plus_button_press)
+            player1Minus!!.setBackgroundResource(R.drawable.minus_button_press)
+        }
+        else if(p1 in 11..25) {
+            player1ScoreView!!.setBackgroundResource(R.drawable.y)
+            player1ScoreChange!!.setBackgroundResource(R.drawable.yt)
+            player1Plus!!.setBackgroundResource(R.drawable.plus_button_press_y)
+            player1Minus!!.setBackgroundResource(R.drawable.minus_button_press_y)
+        }
+        else {
+            player1ScoreView!!.setBackgroundResource(R.drawable.r)
+            player1ScoreChange!!.setBackgroundResource(R.drawable.rt)
+            player1Plus!!.setBackgroundResource(R.drawable.plus_button_press_r)
+            player1Minus!!.setBackgroundResource(R.drawable.minus_button_press_r)
+        }
+
+        if(p2 > 25) {
+            player2ScoreView!!.setBackgroundResource(R.drawable.g)
+            player2ScoreChange!!.setBackgroundResource(R.drawable.gt)
+            player2Plus!!.setBackgroundResource(R.drawable.plus_button_press)
+            player2Minus!!.setBackgroundResource(R.drawable.minus_button_press)
+        }
+        else if(p2 in 11..25) {
+            player2ScoreView!!.setBackgroundResource(R.drawable.y)
+            player2ScoreChange!!.setBackgroundResource(R.drawable.yt)
+            player2Plus!!.setBackgroundResource(R.drawable.plus_button_press_y)
+            player2Minus!!.setBackgroundResource(R.drawable.minus_button_press_y)
+        }
+        else {
+            player2ScoreView!!.setBackgroundResource(R.drawable.r)
+            player2ScoreChange!!.setBackgroundResource(R.drawable.rt)
+            player2Plus!!.setBackgroundResource(R.drawable.plus_button_press_r)
+            player2Minus!!.setBackgroundResource(R.drawable.minus_button_press_r)
+        }
     }
 
 

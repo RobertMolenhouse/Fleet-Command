@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ScoreRealms</string>
+    <string name="app_name">Fleet Command</string>
     <string name="new_game">New Game</string>
     <string name="master_control">Master Control</string>
     <string name="individual_control">Individual Control</string>
